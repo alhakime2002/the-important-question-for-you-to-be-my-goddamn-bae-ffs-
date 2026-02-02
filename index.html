@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>For You mi amor</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: 'Comic Sans MS', cursive;
+      background-color: #ffe6e6;
+    }
+    h1 { color: #ff3366; }
+    button {
+      margin: 10px;
+      padding: 15px;
+      font-size: 18px;
+      background-color: #ff99cc;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    button:hover { background-color: #ff66b2; }
+    #message {
+      display: none;
+      margin-top: 20px;
+      font-size: 22px;
+      color: #ff3366;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Heyyy my bae </h1>
+  <p>I made this page just for you...</p>
+  <h2>Will you be my girlfriend?</h2>
+  <button onclick="sayYes()">Yes! 🎉</button>
+  <button onclick="sayYes()">there is no option to say no to me lil bro</button>
+
+  <div id="message">lets gooooooo💖</div>
+  <canvas id="confetti"></canvas>
+
+  <script>
+    function sayYes() {
+      document.getElementById("message").style.display = "block";
+      startConfetti();
+    }
+
+    // Simple confetti animation
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let pieces = [];
+    for (let i = 0; i < 100; i++) {
+      pieces.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 6 + 4,
+        d: Math.random() * 100,
+        color: "hsl(" + Math.random() * 360 + ",100%,50%)",
+        tilt: Math.random() * 10 - 10
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pieces.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2, false);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+      });
+      update();
+    }
+
+    function update() {
+      pieces.forEach(p => {
+        p.y += Math.cos(p.d) + 1 + p.r/2;
+        p.x += Math.sin(p.d);
+        if (p.y > canvas.height) {
+          p.y = 0;
+          p.x = Math.random() * canvas.width;
+        }
+      });
+    }
+
+    function startConfetti() {
+      setInterval(draw, 20);
+    }
+  </script>
+</body>
+</html>
